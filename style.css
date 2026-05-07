@@ -387,3 +387,18 @@ button:active {
 .cloudy-bg .forecast-card {
   box-shadow: 0 0 20px rgba(200, 200, 200, 0.3);
 }
+
+.hourly-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px;
+}
+
+.hour-card {
+  min-width: 80px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}

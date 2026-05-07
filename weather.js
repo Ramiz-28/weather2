@@ -48,6 +48,7 @@ btn.addEventListener("click", async function () {
 
   // ✅ forecast from backend
   renderForecast(forecast);
+  renderHourlyForecast(forecast);
 });
 
 let saveBtn = document.getElementById("saveCity");
@@ -129,6 +130,7 @@ async function loadCity(city) {
   setWeatherBackground(condition);
 
   renderForecast(forecast);
+  renderHourlyForecast(forecast);
 }
 
 // Delete Cities
@@ -313,3 +315,28 @@ document.getElementById("city").innerText = cityName;
 }
 
 getUserLocationWeather();
+
+
+function renderHourlyForecast(data) {
+  let box = document.getElementById("hourly");
+  box.innerHTML = "";
+
+  // show next 8 intervals (~24 hours)
+  for (let i = 0; i < 8; i++) {
+    let hour = data.list[i];
+
+    let time = new Date(hour.dt * 1000);
+    let hourTime = time.getHours() + ":00";
+
+    let div = document.createElement("div");
+    div.className = "hour-card";
+
+    div.innerHTML = `
+    <p>${hourTime}</p>
+    <div>${getWeatherIcon(hour.weather[0].main)}</div>
+    <p>${hour.main.temp.toFixed(1)}°C</p>
+    `;
+
+    box.appendChild(div);
+  }
+}
