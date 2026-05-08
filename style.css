@@ -390,6 +390,7 @@ button:active {
 
 .hourly-container {
   display: flex;
+  justify-content: center;
   overflow-x: auto;
   gap: 10px;
   padding: 10px;
