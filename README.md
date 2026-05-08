@@ -29,34 +29,53 @@ A simple and fast weather application that allows users to check real-time weath
 
 ---
 
+## 📸 Screenshot
+![Weather App](assets/home.png)
+![Weather App](assets/save.png)
+
+---
+
 ## ⚙️ Installation & Setup
 
-Clone the repository:
+1. Clone the repository:
 
+```bash
 git clone https://github.com/Ramiz-28/weather2.git
 
-Open project folder:
+```
 
+2. Open project folder:
+
+```bash
 cd weather2
 
-Open index.html in your browser
+```
 
-🌐 Deployment
+3. Open `index.html` in your browser
+
+---
+
+## 🌐 Deployment
 
 This project is deployed using Vercel:
 
 👉 https://weather2-natn.vercel.app/
 
-📌 SEO & Optimization
-1. Sitemap added for Google indexing
-2. Meta tags for better search visibility
-3. Google Search Console connected
-🙌 Author
+## 📌 SEO & Optimization
+- Sitemap added for Google indexing
+- Meta tags for better search visibility
+- Google Search Console connected
 
-Rameez Shakeel
+---
+
+## 🙌 Author
+
+**Rameez Shakeel**
 
 GitHub: https://github.com/Ramiz-28
 
-⭐ Support
+---
+
+## ⭐ Support
 
 If you like this project, give it a ⭐ on GitHub!
