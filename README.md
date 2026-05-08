@@ -61,6 +61,8 @@ This project is deployed using Vercel:
 
 👉 https://weather2-natn.vercel.app/
 
+---
+
 ## 📌 SEO & Optimization
 - Sitemap added for Google indexing
 - Meta tags for better search visibility
