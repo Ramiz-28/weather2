@@ -410,3 +410,11 @@ button:active {
   transform: translateY(-8px) scale(1.05);
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
+
+.active-hour {
+  background: #ffffff;
+  color: #000;
+  font-weight: bold;
+  transform: scale(1.05);
+  border-radius: 12px;
+}

@@ -322,23 +322,37 @@ function renderHourlyForecast(data) {
   let box = document.getElementById("hourly");
   box.innerHTML = "";
 
-  // show next 8 intervals (~24 hours)
+  let now = new Date();
+  let currentHour = now.getHours();
+
   for (let i = 0; i < 8; i++) {
     let hour = data.list[i];
 
     let time = new Date(hour.dt * 1000);
-    let hourTime = time.toLocaleTimeString("en-US", {
-  hour: "numeric",
-  hour12: true
-});
+    let forecastHour = time.getHours();
+
+    // 🟢 Check if current hour
+    let isNow = forecastHour === currentHour;
+
+    let hourTime = isNow
+      ? "Now"
+      : time.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          hour12: true
+        }).replace(":00", "");
 
     let div = document.createElement("div");
     div.className = "hour-card";
 
+    // ✅ Add active class
+    if (isNow) {
+      div.classList.add("active-hour");
+    }
+
     div.innerHTML = `
-    <p>${hourTime}</p>
-    <div>${getWeatherIcon(hour.weather[0].main)}</div>
-    <p>${hour.main.temp.toFixed(1)}°C</p>
+      <p>${hourTime}</p>
+      <div>${getWeatherIcon(hour.weather[0].main)}</div>
+      <p>${hour.main.temp.toFixed(1)}°C</p>
     `;
 
     box.appendChild(div);
