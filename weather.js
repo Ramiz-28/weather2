@@ -327,7 +327,10 @@ function renderHourlyForecast(data) {
     let hour = data.list[i];
 
     let time = new Date(hour.dt * 1000);
-    let hourTime = time.getHours() + ":00";
+    let hourTime = time.toLocaleTimeString("en-US", {
+  hour: "numeric",
+  hour12: true
+});
 
     let div = document.createElement("div");
     div.className = "hour-card";
