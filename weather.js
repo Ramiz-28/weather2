@@ -27,7 +27,12 @@ btn.addEventListener("click", async function () {
   let condition = weather.weather[0].main;
 
   document.getElementById("city").innerText = weather.name;
-  document.getElementById("temp").innerText = weather.main.temp + "°C";
+  
+  document.getElementById("temp").innerText =
+  data.main.temp.toFixed(1) + "°C";
+
+document.getElementById("tempRange").innerText =
+  `${data.main.temp_max.toFixed(1)}°C / ${data.main.temp_min.toFixed(1)}°C`;
 
   document.getElementById("condition").innerText =
     "Condition: " + condition;

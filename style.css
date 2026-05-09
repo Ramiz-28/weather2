@@ -418,3 +418,9 @@ button:active {
   transform: scale(1.05);
   border-radius: 12px;
 }
+
+.temp-range {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: -10px;
+}
