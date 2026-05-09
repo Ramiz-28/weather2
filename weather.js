@@ -323,38 +323,48 @@ function renderHourlyForecast(data) {
   box.innerHTML = "";
 
   let now = new Date();
+
+let closestIndex = 0;
+let minDiff = Infinity;
+
+// Find closest forecast time
+for (let i = 0; i < data.list.length; i++) {
+  let forecastTime = new Date(data.list[i].dt * 1000);
+  let diff = Math.abs(forecastTime - now);
+
+  if (diff < minDiff) {
+    minDiff = diff;
+    closestIndex = i;
+  }
+}
   let currentHour = now.getHours();
 
-  for (let i = 0; i < 8; i++) {
-    let hour = data.list[i];
+for (let i = 0; i < 8; i++) {
+  let hour = data.list[i];
+  let time = new Date(hour.dt * 1000);
 
-    let time = new Date(hour.dt * 1000);
-    let forecastHour = time.getHours();
+  let isNow = i === closestIndex;
 
-    // 🟢 Check if current hour
-    let isNow = Math.abs(forecastHour - currentHour) <= 1;
+  let hourTime = isNow
+    ? "Now"
+    : time.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        hour12: true
+      }).replace(":00", "");
 
-    let hourTime = isNow
-      ? "Now"
-      : time.toLocaleTimeString("en-US", {
-          hour: "numeric",
-          hour12: true
-        }).replace(":00", "");
+  let div = document.createElement("div");
+  div.className = "hour-card";
 
-    let div = document.createElement("div");
-    div.className = "hour-card";
-
-    // ✅ Add active class
-    if (isNow) {
-      div.classList.add("active-hour");
-    }
-
-    div.innerHTML = `
-      <p>${hourTime}</p>
-      <div>${getWeatherIcon(hour.weather[0].main)}</div>
-      <p>${hour.main.temp.toFixed(1)}°C</p>
-    `;
-
-    box.appendChild(div);
+  if (isNow) {
+    div.classList.add("active-hour");
   }
+
+  div.innerHTML = `
+    <p>${hourTime}</p>
+    <div>${getWeatherIcon(hour.weather[0].main)}</div>
+    <p>${hour.main.temp.toFixed(1)}°C</p>
+  `;
+
+  box.appendChild(div);
+}
 }
