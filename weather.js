@@ -27,21 +27,14 @@ btn.addEventListener("click", async function () {
   let condition = weather.weather[0].main;
 
   document.getElementById("city").innerText = weather.name;
-  
-  document.getElementById("temp").innerText =
-  data.main.temp.toFixed(1) + "°C";
 
-document.getElementById("tempRange").innerText =
-  `${data.main.temp_max.toFixed(1)}°C / ${data.main.temp_min.toFixed(1)}°C`;
+  document.getElementById("temp").innerText = data.main.temp.toFixed(1) + "°C";
 
-  document.getElementById("condition").innerText =
-    "Condition: " + condition;
+  document.getElementById("condition").innerText = "Condition: " + condition;
 
-  document.getElementById("icon").innerHTML =
-    getWeatherIcon(condition);
+  document.getElementById("icon").innerHTML = getWeatherIcon(condition);
 
-  document.getElementById("humidity").innerText =
-    weather.main.humidity + "%";
+  document.getElementById("humidity").innerText = weather.main.humidity + "%";
 
   document.getElementById("visibility").innerText =
     (weather.visibility / 1000).toFixed(1) + " km";
@@ -64,7 +57,7 @@ saveBtn.addEventListener("click", function () {
   if (city === "") {
     alert("No city to save");
     return;
-  } 
+  }
 
   if (!savedCities.includes(city)) {
     savedCities.push(city);
@@ -114,17 +107,13 @@ async function loadCity(city) {
   let condition = weather.weather[0].main;
 
   document.getElementById("city").innerText = weather.name;
-  document.getElementById("temp").innerText =
-    weather.main.temp + "°C";
+  document.getElementById("temp").innerText = weather.main.temp + "°C";
 
-  document.getElementById("condition").innerText =
-    "Condition: " + condition;
+  document.getElementById("condition").innerText = "Condition: " + condition;
 
-  document.getElementById("icon").innerHTML =
-    getWeatherIcon(condition);
+  document.getElementById("icon").innerHTML = getWeatherIcon(condition);
 
-  document.getElementById("humidity").innerText =
-    weather.main.humidity + "%";
+  document.getElementById("humidity").innerText = weather.main.humidity + "%";
 
   document.getElementById("visibility").innerText =
     (weather.visibility / 1000).toFixed(1) + " km";
@@ -200,30 +189,25 @@ function setWeatherBackground(condition) {
     "rainy-bg",
     "mist-bg",
     "thunder-bg",
-    "default-bg"
+    "default-bg",
   );
 
   if (condition === "Clear") {
     body.classList.add("sunny-bg");
-  }
-  else if (condition === "Clouds") {
+  } else if (condition === "Clouds") {
     body.classList.add("cloudy-bg");
-  }
-  else if (condition === "Rain") {
+  } else if (condition === "Rain") {
     body.classList.add("rainy-bg");
-  }
-  else if (condition === "Thunderstorm") {
+  } else if (condition === "Thunderstorm") {
     body.classList.add("thunder-bg");
-  }
-  else if (
+  } else if (
     condition === "Mist" ||
     condition === "Fog" ||
     condition === "Haze" ||
     condition === "Smoke"
   ) {
     body.classList.add("mist-bg");
-  }
-  else {
+  } else {
     body.classList.add("default-bg");
   }
 }
@@ -243,7 +227,7 @@ function getUserLocationWeather() {
 
       // 🌤️ CURRENT WEATHER
       let res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`,
       );
 
       let data = await res.json();
@@ -253,30 +237,32 @@ function getUserLocationWeather() {
         return;
       }
 
-
       let condition = data.weather[0].main;
 
-// 🌍 REVERSE GEOCODING (ADD HERE)
-let geoRes = await fetch(
-  `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=3ead7b7033d5c5067489f30fff609d85`
-);
+      // 🌍 REVERSE GEOCODING (ADD HERE)
+      let geoRes = await fetch(
+        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=3ead7b7033d5c5067489f30fff609d85`,
+      );
 
-let geoData = await geoRes.json();
+      let geoData = await geoRes.json();
 
-let cityName = geoData[0]?.name || data.name;
+      let cityName = geoData[0]?.name || data.name;
 
-// ✅ USE CLEAN CITY NAME
-document.getElementById("city").innerText = cityName;
-      document.getElementById("temp").innerText = data.main.temp + "°C";
+      // ✅ USE CLEAN CITY NAME
+      document.getElementById("city").innerText = cityName;
+      
+      document.getElementById("temp").innerText =
+        data.main.temp.toFixed(1) + "°C";
+
+      document.getElementById("tempRange").innerText =
+        `${data.main.temp_max.toFixed(1)}°C / ${data.main.temp_min.toFixed(1)}°C`;
 
       document.getElementById("condition").innerText =
         "Condition: " + condition;
 
-      document.getElementById("icon").innerHTML =
-        getWeatherIcon(condition);
+      document.getElementById("icon").innerHTML = getWeatherIcon(condition);
 
-      document.getElementById("humidity").innerText =
-        data.main.humidity + "%";
+      document.getElementById("humidity").innerText = data.main.humidity + "%";
 
       document.getElementById("visibility").innerText =
         (data.visibility / 1000).toFixed(1) + " km";
@@ -289,7 +275,7 @@ document.getElementById("city").innerText = cityName;
 
       // 📅 FORECAST
       let forecastRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`,
       );
 
       let forecastData = await forecastRes.json();
@@ -314,14 +300,13 @@ document.getElementById("city").innerText = cityName;
     // 🔥 THIS PART MAKES IT MORE ACCURATE
     {
       enableHighAccuracy: true, // 👈 VERY IMPORTANT
-      timeout: 10000,           // wait up to 10 sec
-      maximumAge: 0             // no cached location
-    }
+      timeout: 10000, // wait up to 10 sec
+      maximumAge: 0, // no cached location
+    },
   );
 }
 
 getUserLocationWeather();
-
 
 function renderHourlyForecast(data) {
   let box = document.getElementById("hourly");
@@ -329,47 +314,49 @@ function renderHourlyForecast(data) {
 
   let now = new Date();
 
-let closestIndex = 0;
-let minDiff = Infinity;
+  let closestIndex = 0;
+  let minDiff = Infinity;
 
-// Find closest forecast time
-for (let i = 0; i < data.list.length; i++) {
-  let forecastTime = new Date(data.list[i].dt * 1000);
-  let diff = Math.abs(forecastTime - now);
+  // Find closest forecast time
+  for (let i = 0; i < data.list.length; i++) {
+    let forecastTime = new Date(data.list[i].dt * 1000);
+    let diff = Math.abs(forecastTime - now);
 
-  if (diff < minDiff) {
-    minDiff = diff;
-    closestIndex = i;
+    if (diff < minDiff) {
+      minDiff = diff;
+      closestIndex = i;
+    }
   }
-}
   let currentHour = now.getHours();
 
-for (let i = 0; i < 8; i++) {
-  let hour = data.list[i];
-  let time = new Date(hour.dt * 1000);
+  for (let i = 0; i < 8; i++) {
+    let hour = data.list[i];
+    let time = new Date(hour.dt * 1000);
 
-  let isNow = i === closestIndex;
+    let isNow = i === closestIndex;
 
-  let hourTime = isNow
-    ? "Now"
-    : time.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        hour12: true
-      }).replace(":00", "");
+    let hourTime = isNow
+      ? "Now"
+      : time
+          .toLocaleTimeString("en-US", {
+            hour: "numeric",
+            hour12: true,
+          })
+          .replace(":00", "");
 
-  let div = document.createElement("div");
-  div.className = "hour-card";
+    let div = document.createElement("div");
+    div.className = "hour-card";
 
-  if (isNow) {
-    div.classList.add("active-hour");
-  }
+    if (isNow) {
+      div.classList.add("active-hour");
+    }
 
-  div.innerHTML = `
+    div.innerHTML = `
     <p>${hourTime}</p>
     <div>${getWeatherIcon(hour.weather[0].main)}</div>
     <p>${hour.main.temp.toFixed(1)}°C</p>
   `;
 
-  box.appendChild(div);
-}
+    box.appendChild(div);
+  }
 }
