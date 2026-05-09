@@ -250,17 +250,12 @@ function getUserLocationWeather() {
 
       // ✅ USE CLEAN CITY NAME
       document.getElementById("city").innerText = cityName;
-
+      
       document.getElementById("temp").innerText =
         data.main.temp.toFixed(1) + "°C";
 
-      let temps = forecast.list.slice(0, 8).map((item) => item.main.temp);
-
-      let max = Math.max(...temps);
-      let min = Math.min(...temps);
-
       document.getElementById("tempRange").innerText =
-        `${max.toFixed(1)}°C / ${min.toFixed(1)}°C`;
+        `${data.main.temp_max.toFixed(1)}°C / ${data.main.temp_min.toFixed(1)}°C`;
 
       document.getElementById("condition").innerText =
         "Condition: " + condition;
