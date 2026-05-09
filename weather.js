@@ -289,6 +289,7 @@ document.getElementById("city").innerText = cityName;
 
       let forecastData = await forecastRes.json();
       renderForecast(forecastData);
+      renderHourlyForecast(forecastData);
     },
 
     function (error) {
