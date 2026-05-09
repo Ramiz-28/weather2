@@ -332,7 +332,7 @@ function renderHourlyForecast(data) {
     let forecastHour = time.getHours();
 
     // 🟢 Check if current hour
-    let isNow = forecastHour === currentHour;
+    let isNow = Math.abs(forecastHour - currentHour) <= 1;
 
     let hourTime = isNow
       ? "Now"
