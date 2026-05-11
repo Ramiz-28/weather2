@@ -254,9 +254,6 @@ function getUserLocationWeather() {
       document.getElementById("temp").innerText =
         data.main.temp.toFixed(1) + "°C";
 
-      document.getElementById("tempRange").innerText =
-        `${data.main.temp_max.toFixed(1)}°C / ${data.main.temp_min.toFixed(1)}°C`;
-
       document.getElementById("condition").innerText =
         "Condition: " + condition;
 
