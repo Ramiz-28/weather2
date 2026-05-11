@@ -337,7 +337,7 @@ function renderHourlyForecast(data) {
   let currentHour = now.getHours();
 
   for (let i = 0; i < 8; i++) {
-    let hour = data.list[i];
+    let hour = data.list[closestIndex + i];
     let time = new Date(hour.dt * 1000);
 
     let isNow = i === closestIndex;
