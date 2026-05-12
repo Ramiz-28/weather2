@@ -28,7 +28,7 @@ btn.addEventListener("click", async function () {
 
   document.getElementById("city").innerText = weather.name;
 
-  document.getElementById("temp").innerText = data.main.temp.toFixed(1) + "°C";
+  document.getElementById("temp").innerText = weather.main.temp.toFixed(1) + "°C";
 
   document.getElementById("condition").innerText = "Condition: " + condition;
 
