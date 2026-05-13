@@ -231,7 +231,6 @@ function getUserLocationWeather() {
       let data = await res.json();
 
       let weather = data.weather;
-      let forecast = data.forecast;
 
       if (data.cod !== 200) {
         alert(data.message);
