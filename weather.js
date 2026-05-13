@@ -227,7 +227,11 @@ function getUserLocationWeather() {
       console.log("Accurate coords:", lat, lon);
 
       // 🌤️ CURRENT WEATHER
-      let forecast = data.forecast;
+      let res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`,
+      );
+
+      let data = await res.json();
 
       if (data.cod !== 200) {
         alert(data.message);
