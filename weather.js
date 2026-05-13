@@ -28,7 +28,8 @@ btn.addEventListener("click", async function () {
 
   document.getElementById("city").innerText = weather.name;
 
-  document.getElementById("temp").innerText = weather.main.temp.toFixed(1) + "°C";
+  document.getElementById("temp").innerText =
+    weather.main.temp.toFixed(1) + "°C";
 
   document.getElementById("condition").innerText = "Condition: " + condition;
 
@@ -226,11 +227,11 @@ function getUserLocationWeather() {
       console.log("Accurate coords:", lat, lon);
 
       // 🌤️ CURRENT WEATHER
-      let res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`,
-      );
-
+      let res = await fetch(`/api/weather?city=${city}`);
       let data = await res.json();
+
+      let weather = data.weather;
+      let forecast = data.forecast;
 
       if (data.cod !== 200) {
         alert(data.message);
