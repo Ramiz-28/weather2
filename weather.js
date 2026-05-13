@@ -258,7 +258,6 @@ let cityName = data.city;
       let condition = data.weather[0].main;
 
       // 🌍 REVERSE GEOCODING (ADD HERE)
-      let geoRes = await fetch(
       let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
 let data = await res.json();
 
