@@ -10,17 +10,17 @@ btn.addEventListener("click", async function () {
     return;
   }
 
-let res = await fetch(`/api/weather?city=${city}`);
-let data = await res.json();
+  let res = await fetch(`/api/weather?city=${city}`);
+  let data = await res.json();
 
-if (data.error) {
-  alert(data.error);
-  return;
-}
+  if (data.error) {
+    alert(data.error);
+    return;
+  }
 
-let weather = data.weather;
-let forecast = data.forecast;
-let cityName = data.city;
+  let weather = data.weather;
+  let forecast = data.forecast;
+  let cityName = data.city;
 
   // ❗ check error
   if (weather.cod !== 200) {
@@ -101,16 +101,16 @@ async function loadCity(city) {
   document.getElementById("cityInput").value = city;
 
   let res = await fetch(`/api/weather?city=${city}`);
-let data = await res.json();
+  let data = await res.json();
 
-if (data.error) {
-  alert(data.error);
-  return;
-}
+  if (data.error) {
+    alert(data.error);
+    return;
+  }
 
-let weather = data.weather;
-let forecast = data.forecast;
-let cityName = data.city;
+  let weather = data.weather;
+  let forecast = data.forecast;
+  let cityName = data.city;
   if (weather.cod !== 200) {
     alert(weather.message);
     return;
@@ -238,40 +238,24 @@ function getUserLocationWeather() {
       console.log("Accurate coords:", lat, lon);
 
       // 🌤️ CURRENT WEATHER
-    let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
-let data = await res.json();
+      let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+      let data = await res.json();
 
-if (data.error) {
-  alert(data.error);
-  return;
-}
-
-let weather = data.weather;
-let forecast = data.forecast;
-let cityName = data.city;
-
-      if (data.cod !== 200) {
-        alert(data.message);
+      if (data.error) {
+        alert(data.error);
         return;
       }
 
-      let condition = data.weather[0].main;
+      let weather = data.weather;
+      let forecast = data.forecast;
+      let cityName = data.city;
 
-      // 🌍 REVERSE GEOCODING (ADD HERE)
-      let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
-let data = await res.json();
+      if (weather.cod !== 200) {
+        alert(weather.message);
+        return;
+      }
 
-if (data.error) {
-  alert(data.error);
-  return;
-}
-
-let weather = data.weather;
-let forecast = data.forecast;
-let cityName = data.city;
-
-     
-
+      let condition = weather.weather[0].main;
       // ✅ USE CLEAN CITY NAME
       document.getElementById("city").innerText = cityName;
 
@@ -295,17 +279,17 @@ let cityName = data.city;
       setWeatherBackground(condition);
 
       // 📅 FORECAST
- let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
-let data = await res.json();
+      let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+      let data = await res.json();
 
-if (data.error) {
-  alert(data.error);
-  return;
-}
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
 
-let weather = data.weather;
-let forecast = data.forecast;
-let cityName = data.city;
+      let weather = data.weather;
+      let forecast = data.forecast;
+      let cityName = data.city;
 
       renderForecast(forecastData);
       renderHourlyForecast(forecastData);
