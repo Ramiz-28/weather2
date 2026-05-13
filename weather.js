@@ -10,11 +10,17 @@ btn.addEventListener("click", async function () {
     return;
   }
 
-  let res = await fetch(`/api/weather?city=${city}`);
-  let data = await res.json();
+let res = await fetch(`/api/weather?city=${city}`);
+let data = await res.json();
 
-  let weather = data.weather;
-  let forecast = data.forecast;
+if (data.error) {
+  alert(data.error);
+  return;
+}
+
+let weather = data.weather;
+let forecast = data.forecast;
+let cityName = data.city;
 
   // ❗ check error
   if (weather.cod !== 200) {
@@ -95,11 +101,16 @@ async function loadCity(city) {
   document.getElementById("cityInput").value = city;
 
   let res = await fetch(`/api/weather?city=${city}`);
-  let data = await res.json();
+let data = await res.json();
 
-  let weather = data.weather;
-  let forecast = data.forecast;
+if (data.error) {
+  alert(data.error);
+  return;
+}
 
+let weather = data.weather;
+let forecast = data.forecast;
+let cityName = data.city;
   if (weather.cod !== 200) {
     alert(weather.message);
     return;
@@ -227,9 +238,17 @@ function getUserLocationWeather() {
       console.log("Accurate coords:", lat, lon);
 
       // 🌤️ CURRENT WEATHER
-      let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+    let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+let data = await res.json();
 
-      let data = await res.json();
+if (data.error) {
+  alert(data.error);
+  return;
+}
+
+let weather = data.weather;
+let forecast = data.forecast;
+let cityName = data.city;
 
       if (data.cod !== 200) {
         alert(data.message);
@@ -240,12 +259,19 @@ function getUserLocationWeather() {
 
       // 🌍 REVERSE GEOCODING (ADD HERE)
       let geoRes = await fetch(
-        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=3ead7b7033d5c5067489f30fff609d85`,
-      );
+      let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+let data = await res.json();
 
-      let geoData = await geoRes.json();
+if (data.error) {
+  alert(data.error);
+  return;
+}
 
-      let cityName = geoData[0]?.name || data.name;
+let weather = data.weather;
+let forecast = data.forecast;
+let cityName = data.city;
+
+     
 
       // ✅ USE CLEAN CITY NAME
       document.getElementById("city").innerText = cityName;
@@ -270,11 +296,17 @@ function getUserLocationWeather() {
       setWeatherBackground(condition);
 
       // 📅 FORECAST
-      let forecastRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`,
-      );
+ let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+let data = await res.json();
 
-      let forecastData = await forecastRes.json();
+if (data.error) {
+  alert(data.error);
+  return;
+}
+
+let weather = data.weather;
+let forecast = data.forecast;
+let cityName = data.city;
 
       renderForecast(forecastData);
       renderHourlyForecast(forecastData);
