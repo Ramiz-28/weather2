@@ -227,10 +227,7 @@ function getUserLocationWeather() {
       console.log("Accurate coords:", lat, lon);
 
       // 🌤️ CURRENT WEATHER
-      let res = await fetch(`/api/weather?city=${city}`);
-      let data = await res.json();
-
-      let weather = data.weather;
+      let forecast = data.forecast;
 
       if (data.cod !== 200) {
         alert(data.message);
