@@ -28,7 +28,8 @@ btn.addEventListener("click", async function () {
 
   document.getElementById("city").innerText = weather.name;
 
-  document.getElementById("temp").innerText = weather.main.temp.toFixed(1) + "°C";
+  document.getElementById("temp").innerText =
+    weather.main.temp.toFixed(1) + "°C";
 
   document.getElementById("condition").innerText = "Condition: " + condition;
 
@@ -226,62 +227,51 @@ function getUserLocationWeather() {
       console.log("Accurate coords:", lat, lon);
 
       // 🌤️ CURRENT WEATHER
-      let res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`,
-      );
-
+      let res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
       let data = await res.json();
 
-      if (data.cod !== 200) {
-        alert(data.message);
+      let weather = data.weather;
+      let forecast = data.forecast;
+
+      // ✅ Correct check
+      if (weather.cod !== 200) {
+        alert(weather.message);
         return;
       }
 
-      let condition = data.weather[0].main;
+      let condition = weather.weather[0].main;
 
-      // 🌍 REVERSE GEOCODING (ADD HERE)
-      let geoRes = await fetch(
-        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=3ead7b7033d5c5067489f30fff609d85`,
-      );
+      // ✅ Use city name directly
+      let cityName = weather.name;
 
-      let geoData = await geoRes.json();
-
-      let cityName = geoData[0]?.name || data.name;
-
-      // ✅ USE CLEAN CITY NAME
       document.getElementById("city").innerText = cityName;
 
       document.getElementById("temp").innerText =
-        data.main.temp.toFixed(1) + "°C";
+        weather.main.temp.toFixed(1) + "°C";
 
       document.getElementById("condition").innerText =
         "Condition: " + condition;
 
       document.getElementById("icon").innerHTML = getWeatherIcon(condition);
 
-      document.getElementById("humidity").innerText = data.main.humidity + "%";
+      document.getElementById("humidity").innerText =
+        weather.main.humidity + "%";
 
       document.getElementById("visibility").innerText =
-        (data.visibility / 1000).toFixed(1) + " km";
+        (weather.visibility / 1000).toFixed(1) + " km";
 
       document.getElementById("wind").innerText =
-        (data.wind.speed * 3.6).toFixed(1) + " km/h";
+        (weather.wind.speed * 3.6).toFixed(1) + " km/h";
 
       // 🌈 Background
       setWeatherBackground(condition);
 
       // 📅 FORECAST
-      let forecastRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=3ead7b7033d5c5067489f30fff609d85&units=metric`,
-      );
+      renderForecast(forecast);
+      renderHourlyForecast(forecast);
 
-      let forecastData = await forecastRes.json();
-
-      renderForecast(forecastData);
-      renderHourlyForecast(forecastData);
-
-      // ✅ ADD HERE
-      let temps = forecastData.list.slice(0, 8).map((item) => item.main.temp);
+      // ✅ Max / Min from next 24 hours
+      let temps = forecast.list.slice(0, 8).map((item) => item.main.temp);
 
       let max = Math.max(...temps);
       let min = Math.min(...temps);
