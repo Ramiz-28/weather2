@@ -1,4 +1,3 @@
-let savedCities = JSON.parse(localStorage.getItem("cities")) || [];
 
 let btn = document.getElementById("getWeather");
 
@@ -52,43 +51,48 @@ btn.addEventListener("click", async function () {
 
 let saveBtn = document.getElementById("saveCity");
 
-saveBtn.addEventListener("click", function () {
+saveBtn.addEventListener("click", async function () {
   let city = document.getElementById("city").innerText;
 
-  if (city === "") {
+  if (!city) {
     alert("No city to save");
     return;
   }
 
-  if (!savedCities.includes(city)) {
-    savedCities.push(city);
-    localStorage.setItem("cities", JSON.stringify(savedCities));
-    renderCities();
-  } else {
-    alert("City already saved");
-  }
+  await fetch("/api/saveCity", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ city }),
+  });
+
+  renderCities(); // refresh list
 });
 
 // ✅ OUTSIDE (IMPORTANT)
-function renderCities() {
+async function renderCities() {
+  let res = await fetch("/api/getCities");
+  let data = await res.json();
+
   let list = document.getElementById("history");
   list.innerHTML = "";
 
-  for (let i = 0; i < savedCities.length; i++) {
+  data.forEach((item) => {
     let div = document.createElement("div");
     div.className = "history-card";
 
     div.innerHTML = `
-      <span onclick="loadCity('${savedCities[i]}')" style="cursor:pointer;">
-        <i class="fa-solid fa-location-dot"></i> ${savedCities[i]}
+      <span onclick="loadCity('${item.city}')" style="cursor:pointer;">
+        <i class="fa-solid fa-location-dot"></i> ${item.city}
       </span>
-      <button onclick="deleteCity(${i})">
+      <button onclick="deleteCity('${item.city}')">
         <i class="fa-solid fa-trash"></i>
       </button>
     `;
 
     list.appendChild(div);
-  }
+  });
 }
 
 async function loadCity(city) {
@@ -108,7 +112,7 @@ async function loadCity(city) {
   let condition = weather.weather[0].main;
 
   document.getElementById("city").innerText = weather.name;
-  document.getElementById("temp").innerText = weather.main.temp + "°C";
+  document.getElementById("temp").innerText = weather.main.temp.toFixed(1) + "°C";
 
   document.getElementById("condition").innerText = "Condition: " + condition;
 
@@ -129,10 +133,16 @@ async function loadCity(city) {
 }
 
 // Delete Cities
-function deleteCity(index) {
-  savedCities.splice(index, 1);
-  localStorage.setItem("cities", JSON.stringify(savedCities));
-  renderCities();
+async function deleteCity(city) {
+  await fetch("/api/deleteCity", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ city }),
+  });
+
+  renderCities(); // refresh UI
 }
 
 // Get Weather Icons
