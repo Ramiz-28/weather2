@@ -1,122 +1,117 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Google Verification -->
-    <meta
-      name="google-site-verification"
-      content="lXiqPY-CrGrDEEG2zs4933Cq6Edf4qaz_uFFto6bHN8"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- SEO Title -->
-    <title>Live Weather App - Check Weather for Any City Instantly</title>
+  <!-- Google Verification -->
+  <meta name="google-site-verification" content="lXiqPY-CrGrDEEG2zs4933Cq6Edf4qaz_uFFto6bHN8" />
 
-    <!-- SEO Meta -->
-    <meta
-      name="description"
-      content="Check real-time weather updates for any city. Get temperature, humidity, and forecasts instantly."
-    />
-    <meta
-      name="keywords"
-      content="weather app, live weather, forecast, temperature, weather online"
-    />
+  <!-- SEO Title -->
+  <title>Live Weather App - Check Weather for Any City Instantly</title>
 
-    <!-- Open Graph (for sharing) -->
-    <meta property="og:title" content="Live Weather App" />
-    <meta
-      property="og:description"
-      content="Check real-time weather updates instantly"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://weather2-natn.vercel.app/" />
+  <!-- SEO Meta -->
+  <meta name="description"
+    content="Check real-time weather updates for any city. Get temperature, humidity, and forecasts instantly." />
+  <meta name="keywords" content="weather app, live weather, forecast, temperature, weather online" />
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-  </head>
-  <body>
+  <!-- Open Graph (for sharing) -->
+  <meta property="og:title" content="Live Weather App" />
+  <meta property="og:description" content="Check real-time weather updates instantly" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://weather2-natn.vercel.app/" />
+  <meta property="og:image" content="https://weather2-natn.vercel.app/preview.png" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="/assets/favicon.ico" />
+</head>
+
+<body>
+  <header>
     <h1>Live Weather App</h1>
 
     <p>Check real-time weather updates for any city around the world.</p>
+  </header>
 
-    <div class="container">
-      <input type="text" id="cityInput" placeholder="Enter City" />
-      <button id="getWeather"><i class="fa-solid fa-search"></i></button>
-      <button id="saveCity">Save</button>
+  <div class="container">
+    <input type="text" id="cityInput" placeholder="Enter City" autocomplete="off" />
+    <button id="getWeather" aria-label="Search weather">
+      <i class="fa-solid fa-search"></i>
+    </button>
+    <button id="saveCity">Save</button>
 
-      <!-- Cards -->
-      <div class="weather-cards">
-        <!-- Card 1 -->
-        <div class="card animate">
-          <h3>
-            <i class="fa-solid fa-location-dot"></i> <br />
-            City
-          </h3>
-          <p id="city"></p>
-        </div>
-        <!-- Card 2 -->
-        <div class="card animate">
-          <h3>
-            🌡️ <br />
-            Temperature
-          </h3>
-          <p id="temp"></p>
-          <p id="tempRange" class="temp-range"></p>
-        </div>
-        <!-- Card 3 -->
-        <div class="card animate">
-          <h3>
-            ⛅ <br />
-            Condition
-          </h3>
-          <p id="condition"></p>
-          <p id="icon" class="weather-icon" style="font-size: 20px"></p>
-        </div>
-        <!-- Card 4 -->
-        <div class="card animate">
-          <h3>
-            💧 <br />
-            Humidity
-          </h3>
-          <p id="humidity"></p>
-        </div>
-        <!-- Card 5 -->
-        <div class="card animate">
-          <h3>
-            <i class="fa-solid fa-eye"></i> <br />
-            Visibility
-          </h3>
-          <p id="visibility"></p>
-        </div>
-        <!-- Card 6 -->
-        <div class="card animate">
-          <h3>
-            💨 <br />
-            Wind
-          </h3>
-          <p id="wind"></p>
-        </div>
-    
+    <!-- Cards -->
+    <div class="weather-cards">
+      <!-- Card 1 -->
+      <div class="card animate">
+        <h3>
+          <i class="fa-solid fa-location-dot"></i> <br />
+          City
+        </h3>
+        <p id="city"></p>
       </div>
+      <!-- Card 2 -->
+      <div class="card animate">
+        <h3>
+          🌡️ <br />
+          Temperature
+        </h3>
+        <p id="temp"></p>
+        <p id="tempRange" class="temp-range"></p>
+      </div>
+      <!-- Card 3 -->
+      <div class="card animate">
+        <h3>
+          ⛅ <br />
+          Condition
+        </h3>
+        <p id="condition"></p>
+        <p id="icon" class="weather-icon"></p>
+      </div>
+      <!-- Card 4 -->
+      <div class="card animate">
+        <h3>
+          💧 <br />
+          Humidity
+        </h3>
+        <p id="humidity"></p>
+      </div>
+      <!-- Card 5 -->
+      <div class="card animate">
+        <h3>
+          <i class="fa-solid fa-eye"></i> <br />
+          Visibility
+        </h3>
+        <p id="visibility"></p>
+      </div>
+      <!-- Card 6 -->
+      <div class="card animate">
+        <h3>
+          💨 <br />
+          Wind
+        </h3>
+        <p id="wind"></p>
+      </div>
+
     </div>
+  </div>
 
-    <!-- Saved Cities -->
-    <h2>Saved Cities</h2>
-    <div id="history" class="history-cards animate"></div>
+  <!-- Saved Cities -->
+  <h2>Saved Cities</h2>
+  <div id="history" class="history-cards animate"></div>
 
-    <!-- 5 Day Forecast -->
-    <h2>5 Day Forecast</h2>
-    <div id="forecast" class="forecast-grid"></div>
+  <!-- 5 Day Forecast -->
+  <h2>5 Day Forecast</h2>
+  <div id="forecast" class="forecast-grid"></div>
 
-    <!-- Hourly Forecast -->
-    <h2>Hourly Forecast</h2>
-    <div id="hourly" class="hourly-container"></div>
+  <!-- Hourly Forecast -->
+  <h2>Hourly Forecast</h2>
+  <div id="hourly" class="hourly-container"></div>
 
-    <script src="weather.js"></script>
-  </body>
+  <script src="weather.js"></script>
+</body>
+
 </html>
