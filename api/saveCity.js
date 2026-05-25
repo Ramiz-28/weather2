@@ -1,24 +1,23 @@
 import clientPromise from "../lib/mongodb";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+  if (req.method === "POST") {
+    try {
+      const client = await clientPromise;
+      const db = client.db("weatherDB");
 
-  try {
-    const { city } = req.body;
+      const { city } = req.body;
 
-    const client = await clientPromise;
-    const db = client.db("weatherApp");
+      if (!city) {
+        return res.status(400).json({ error: "City required" });
+      }
 
-    await db.collection("cities").insertOne({
-      city,
-      createdAt: new Date(),
-    });
+      await db.collection("cities").insertOne({ city });
 
-    res.status(200).json({ success: true });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "DB error" });
+      res.status(200).json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Server error" });
+    }
   }
 }
