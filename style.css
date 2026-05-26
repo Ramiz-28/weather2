@@ -298,6 +298,7 @@ button:active {
   padding: 15px;
   border-radius: 15px;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.15);
   text-align: center;
   flex-shrink: 0;
