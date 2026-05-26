@@ -59,13 +59,16 @@ saveBtn.addEventListener("click", async function () {
     return;
   }
 
-  await fetch("/api/saveCity", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ city }),
-  });
+let res = await fetch("/api/saveCity", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ city }),
+});
+
+if (!res.ok) {
+  alert("Failed to save city");
+  return;
+}
 
   renderCities(); // refresh list
 });
@@ -73,6 +76,12 @@ saveBtn.addEventListener("click", async function () {
 // ✅ OUTSIDE (IMPORTANT)
 async function renderCities() {
   let res = await fetch("/api/getCities");
+
+  if (!res.ok) {
+    console.log("Server error while fetching cities");
+    return; // stop crash
+  }
+
   let data = await res.json();
 
   let list = document.getElementById("history");
@@ -83,7 +92,7 @@ async function renderCities() {
     div.className = "history-card";
 
     div.innerHTML = `
-      <span onclick="loadCity('${item.city}')" style="cursor:pointer;">
+      <span onclick="loadCity('${item.city}')">
         <i class="fa-solid fa-location-dot"></i> ${item.city}
       </span>
       <button onclick="deleteCity('${item.city}')">
