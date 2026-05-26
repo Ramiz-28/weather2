@@ -9,7 +9,7 @@ btn.addEventListener("click", async function () {
     return;
   }
 
-  let res = await fetch(`./api/weather?city=${city}`);
+  let res = await fetch(`/api/weather?city=${city}`);
   let data = await res.json();
 
   let weather = data.weather;
@@ -59,7 +59,7 @@ saveBtn.addEventListener("click", async function () {
     return;
   }
 
-  await fetch("./api/saveCity", {
+  await fetch("/api/saveCity", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -72,7 +72,7 @@ saveBtn.addEventListener("click", async function () {
 
 // ✅ OUTSIDE (IMPORTANT)
 async function renderCities() {
-  let res = await fetch("./api/getCities");
+  let res = await fetch("/api/getCities");
   let data = await res.json();
 
   let list = document.getElementById("history");
