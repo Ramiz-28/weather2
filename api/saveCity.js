@@ -14,10 +14,13 @@ export default async function handler(req, res) {
 
       await db.collection("cities").insertOne({ city });
 
-      res.status(200).json({ success: true });
+      return res.status(200).json({ success: true });
     } catch (error) {
       console.log("SAVE CITY ERROR:", error);
-      res.status(500).json({ error: "Server error" });
+      return res.status(500).json({ error: "Server error" });
     }
   }
+
+  // ✅ ADD THIS (VERY IMPORTANT)
+  return res.status(405).json({ error: "Method not allowed" });
 }
