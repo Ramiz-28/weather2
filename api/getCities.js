@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     console.log("Mongo connected"); // 👈 ADD THIS
 
-    const db = client.db("weatherDB");
+    const db = client.db("rameezshakeel67_db_user");
 
     const cities = await db.collection("cities").find({}).toArray();
 
