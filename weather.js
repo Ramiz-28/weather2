@@ -59,7 +59,7 @@ saveBtn.addEventListener("click", async function () {
     return;
   }
 
-let res = await fetch("/api/saveCity", {
+let res = await fetch("../api/saveCity", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ city }),
@@ -75,7 +75,7 @@ if (!res.ok) {
 
 // ✅ OUTSIDE (IMPORTANT)
 async function renderCities() {
-  let res = await fetch("/api/getCities");
+  let res = await fetch("../api/getCities");
 
   if (!res.ok) {
     console.log("Server error while fetching cities");
