@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const client = await clientPromise;
-      const db = client.db("rameezshakeel67_db_user");
+      const db = client.db("weatherDB");
 
       const { city } = req.body;
 
