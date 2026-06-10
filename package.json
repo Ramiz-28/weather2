@@ -1,9 +1,8 @@
-
 {
   "name": "weather-app",
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "mongodb": "^7.2.0"
+    "mongodb": "^7.3.0"
   }
 }
