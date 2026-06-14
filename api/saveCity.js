@@ -1,23 +1,25 @@
-import clientPromise from "../lib/mongodb";
+import supabase from "../lib/supabase.js";
 
 export default async function handler(req, res) {
-  if (req.method === "POST") {
-    try {
-      const client = await clientPromise;
-      const db = client.db("weatherDB");
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-      const { city } = req.body || {};
+  try {
+    const { city } = req.body;
 
-      if (!city) {
-        return res.status(400).json({ error: "City required" });
-      }
-
-      await db.collection("cities").insertOne({ city });
-
-      res.status(200).json({ success: true });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: error.message });
+    if (!city) {
+      return res.status(400).json({ error: "City required" });
     }
+
+    const { error } = await supabase
+      .from("cities")
+      .insert([{ city }]);
+
+    if (error) throw error;
+
+    res.status(200).json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 }

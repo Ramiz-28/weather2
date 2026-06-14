@@ -1,15 +1,17 @@
-import clientPromise from "../lib/mongodb";
+import supabase from "../lib/supabase.js";
 
 export default async function handler(req, res) {
   try {
-    const client = await clientPromise;
-    const db = client.db("weatherDB");
+    const { data, error } = await supabase
+      .from("cities")
+      .select("*");
 
-    const cities = await db.collection("cities").find({}).toArray();
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
 
-    res.status(200).json(cities);
-  } catch (error) {
-  console.log("FULL ERROR:", error);
-  return res.status(500).json({ error: error.message });
-}
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 }
