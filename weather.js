@@ -32,6 +32,12 @@ async function login() {
   }
 }
 
+const {
+  data: { session },
+} = await supabase.auth.getSession();
+
+const token = session?.access_token;
+
 
 let btn = document.getElementById("getWeather");
 
@@ -93,28 +99,44 @@ saveBtn.addEventListener("click", async function () {
     return;
   }
 
-let res = await fetch("../api/saveCity", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ city }),
-});
+  // 🔑 get logged-in user session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-if (!res.ok) {
-  alert("Failed to save city");
-  return;
-}
+  if (!session) {
+    alert("Please login first");
+    return;
+  }
+
+  let res = await fetch("/api/saveCity", { // ✅ FIXED PATH
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${session.access_token}`, // 🔥 IMPORTANT
+    },
+    body: JSON.stringify({ city }),
+  });
+
+  if (!res.ok) {
+    alert("Failed to save city");
+    return;
+  }
 
   renderCities(); // refresh list
 });
 
 // ✅ OUTSIDE (IMPORTANT)
 async function renderCities() {
-  let res = await fetch("../api/getCities");
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  if (!res.ok) {
-    console.log("Server error while fetching cities");
-    return; // stop crash
-  }
+  let res = await fetch("/api/getCities", {
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+    },
+  });
 
   let data = await res.json();
 
@@ -123,17 +145,7 @@ async function renderCities() {
 
   data.forEach((item) => {
     let div = document.createElement("div");
-    div.className = "history-card";
-
-    div.innerHTML = `
-      <span onclick="loadCity('${item.city}')">
-        <i class="fa-solid fa-location-dot"></i> ${item.city}
-      </span>
-      <button onclick="deleteCity('${item.city}')">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-    `;
-
+    div.innerText = item.city;
     list.appendChild(div);
   });
 }
@@ -177,10 +189,21 @@ async function loadCity(city) {
 
 // Delete Cities
 async function deleteCity(city) {
+  // 🔑 get session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    alert("Please login first");
+    return;
+  }
+
   await fetch("/api/deleteCity", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${session.access_token}`, // 🔥 IMPORTANT
     },
     body: JSON.stringify({ city }),
   });
@@ -377,6 +400,7 @@ function renderHourlyForecast(data) {
       closestIndex = i;
     }
   }
+  
   let currentHour = now.getHours();
 
   for (let i = 0; i < 8; i++) {
