@@ -32,11 +32,13 @@ async function login() {
   }
 }
 
-const {
-  data: { session },
-} = await supabase.auth.getSession();
+async function getSessionData() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-const token = session?.access_token;
+  return session;
+}
 
 
 let btn = document.getElementById("getWeather");
