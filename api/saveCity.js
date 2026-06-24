@@ -35,6 +35,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  console.log("SAVE CITY ERROR:", err); // 🔥 ADD THIS
+  res.status(500).json({ error: err.message });
+}
 }
