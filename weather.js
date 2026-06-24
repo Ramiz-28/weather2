@@ -20,17 +20,20 @@ window.login = async function () {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
 
-  let { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  if (error) alert(error.message);
-  else {
-    alert("Login successful!");
-    renderCities(); // reload cities
+  if (error) {
+    console.log(error);
+    alert(error.message); // 🔥 shows real reason
+    return;
   }
-}
+
+  alert("Login successful!");
+  renderCities();
+};
 
 async function getSessionData() {
   const {
@@ -133,6 +136,12 @@ async function renderCities() {
   const {
     data: { session },
   } = await supabase.auth.getSession();
+
+  // ✅ FIX: check session first
+  if (!session) {
+    console.log("No user logged in");
+    return;
+  }
 
   let res = await fetch("/api/getCities", {
     headers: {
