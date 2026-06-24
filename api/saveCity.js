@@ -17,6 +17,8 @@ export default async function handler(req, res) {
       data: { user },
     } = await supabase.auth.getUser(token);
 
+    console.log("USER:", user);
+
     if (!user) {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -39,3 +41,4 @@ export default async function handler(req, res) {
   res.status(500).json({ error: err.message });
 }
 }
+
