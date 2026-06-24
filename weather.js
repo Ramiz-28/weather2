@@ -1,12 +1,12 @@
 const SUPABASE_URL = "https://llcagxshbflnepqrusgf.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsY2FneHNoYmZsbmVwcXJ1c2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNjE1NDgsImV4cCI6MjA5NjczNzU0OH0.sKOz-Dlk7au5IrtNCAS0bmCfksYnfEJGgo1k8Vyr9UM";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY
 );
 
-async function signUp() {
+window.signUp = async function () {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
 
@@ -14,9 +14,9 @@ async function signUp() {
 
   if (error) alert(error.message);
   else alert("Signup successful!");
-}
+};
 
-async function login() {
+window.login = async function () {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
 
